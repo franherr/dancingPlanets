@@ -9,8 +9,6 @@ COLORS = ["red", "blue", "green", "yellow", "purple", "orange", "pink"]
 
 """ Summary of User functions:
 
-
-
 drawCorrespondence
     parameters: alpha, beta, mult
         all are integers. 
