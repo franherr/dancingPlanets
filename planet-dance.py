@@ -80,11 +80,11 @@ def knotStrandPoints(a, b):
     index = 0
     while index <= max(abs(a),abs(b)) :
         if a >= b :
-            points.append(((index/abs(a)), 0))
-            points.append(((index/abs(a)), 1))
+            points.append(((index/abs(b)), 0))
+            points.append(((index/abs(b)), 1))
         else :
-            points.append((0, (index/abs(b))))
-            points.append((1, (index/abs(b))))
+            points.append((0, (index/abs(a))))
+            points.append((1, (index/abs(a))))
         index += 1
     return points
 
@@ -124,7 +124,7 @@ def drawKnotStrands(a, b, col, graph):
         graph.set_aspect('equal')
     points = knotStrandPoints(a,b)
     for p in points:
-        graph.axline(p, slope=a/b, color=col)
+        graph.axline(p, slope=b/a, color=col)
 
 # Draws points at m evenly spaced intervals along the linear loop on the torus ay = bx
 # parameters: - integers a and b
@@ -134,7 +134,7 @@ def drawKnotStrands(a, b, col, graph):
 def sampleKnot(a, b, m, col, graph):
     k = 0
     while k < m :
-        graph.plot((b*(k/m) % 1), (a*(k/m) % 1), marker='.', color=col)
+        graph.plot((a*(k/m) % 1), (b*(k/m) % 1), marker='.', color=col)
         k += 1
 
 # Plots the epicycloid with given integers a and b for time t in [0, range].
@@ -204,9 +204,9 @@ def drawCorrespondence(alpha, beta, mult):
     ax[1][1].set_title('Epicycloid')
 
     drawKnotStrands(a, b, 'blue', ax[0][1])
-    drawKnotStrands(mult, 1, 'red', ax[0][1])
-    sampleKnot(mult, 1, sam, 'black', ax[0][1])
-    ax[0][1].set_title('Linear Loops on Torus (' + str(alpha) + ', ' +  str(beta) + ') and (' + str(mult) + ', 1)')
+    drawKnotStrands(1, mult, 'red', ax[0][1])
+    sampleKnot(1, mult, sam, 'black', ax[0][1])
+    ax[0][1].set_title('Linear Loops on Torus (' + str(alpha) + ', ' +  str(beta) + ') and (1, ' + str(mult) + ')')
 
     plt.show()
 
@@ -284,100 +284,8 @@ def drawMMT(m, a) :
 #    Example commands
 #--------------------------------------------------------------------------------------------------
 
-""" To do:
-    - fix drawCorrespondence because it is drawing too many dots """
-
-#figure, axis = plt.subplot(2,2)
-
-#drawExtendedChords(generatePlanetDanceChords(ALPHA, BETA, SAMPLE))
-#drawChords(generateModChords(abs(ALPHA - BETA*50), 50))
-#drawKnotStrands(3, 2, 'blue')
-#drawKnotStrands(20, 1, 'red')
-#sampleKnot(3,2,37,'black')
-#sampleKnot(20,1,74,'black')
-#plt.show()
-
-#drawKnotStrands(5, 2, 'blue', plt)
-#drawKnotStrands(2, 1, 'red', plt)
-#plt.show()
-
-#drawKnotStrands(65, 1, 'blue', plt)
-#sampleKnot(65, 1, 189, 'black', plt)
-#plt.show()
-
-#planetDanceSample(5, 2, 189, plt)
-#plt.show()
-
-
-# planetDance(-3, 2)
-# planetDanceSample(3,2,37)
-
-# drawChords(generateModChords(194,50))
-# plt.show()
-
-
-# plotEpicycloid(2, 3, 8*math.pi, plt)
-# plt.show()
-
-# Displaying the plot
-# plt.show()
-
-# drawCorrespondence(-4,3,50)
-# drawCorrespondence(4,2,50)
-# 
-# drawCorrespondence(6,3,50)
-
-
-#modMultTable(100,34,plt)
-#plt.show()
-
-
-#-----------------------------------------------------------------
-
-
-#knotAndSampleDance(51, 1, 100)
-#knotAndSampleDance(21, 1, 140)
-#knotAndSampleDance(21, 1, 200)
-#knotAndSampleDance(51, 1, 550)
-#knotAndSampleDance(26, 1, 100)
-#
 
 drawMMT(512, 43)
 danceAndEpicycloid(4, 3)
-knotAndSampleDance(34, 1, 100)
-drawCorrespondence(5,2,41)
-
-# danceAndEpicycloid(-3, 2)
-# 
-# danceAndEpicycloid(3, 4)
-# danceAndEpicycloid(-3, 4)
-# danceAndEpicycloid(4, -3)
-# danceAndEpicycloid(3, -4)
-# danceAndEpicycloid(-4, 3)
-#danceAndEpicycloid(-3, -4)
-#danceAndEpicycloid(3, 4)
-#danceAndEpicycloid(3,2)
-#danceAndEpicycloid(5,-3)
-
-#drawCorrespondence(2,3,34)
-
-#
-#drawChords(generatePlanetDanceChords(34,1,138), True , ax)
-#plt.show()
-
-#figure, ax = plt.subplots(1)
-#plotEpicycloid(5, -3, PERIOD, ax)
-#plt.show()
-
-#knots = [[1, 1, 'gray'], [1, 3, 'blue'], [41, 1, 'orange']]
-#drawKnots(knots, [2, 366])
-
-# knotAndSampleDance(30, 1, 60)
-# knotAndSampleDance(31, 1, 60)
-# knotAndSampleDance(29, 1, 60)
-# knotAndSampleDance(33, 1, 99)
-# knotAndSampleDance(34, 1, 99)
-# knotAndSampleDance(32, 1, 99)
-# knotAndSampleDance(25, 1, 100)
-# knotAndSampleDance(24, 1, 100)
-# knotAndSampleDance(26, 1, 100)
+knotAndSampleDance(1, 34, 100)
+drawCorrespondence(3,2,34)
