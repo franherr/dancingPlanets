@@ -357,16 +357,13 @@ def drawMMT(m, a) :
 # knotAndSampleDance(1,25,52)
 # knotAndSampleDance(1,25,75)
 # knotAndSampleDance(3,2,100)
-drawCorrespondence(3,2,34)
+# drawCorrespondence(3,2,34)
 
 # knotAndSampleDance(1,25,100)
 # knotAndSampleDance(1,25,96)
 # knotAndSampleDance(1,25,104)
 
-<<<<<<< HEAD
-=======
 drawMMT(512, 43)
 danceAndEpicycloid(4, 3)
 knotAndSampleDance(1, 34, 100)
 drawCorrespondence(3,2,34)
->>>>>>> 5656b894331437789a9fabd08a4641887f71629e
