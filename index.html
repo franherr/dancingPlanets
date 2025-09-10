@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Planet Dance and Epicycloid</title>
+  <style>
+    body { font-family: sans-serif; background: #f8f8f8; }
+    .canvas-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      gap: 32px 32px;
+      justify-content: center;
+      align-items: center;
+      margin: 40px auto 0 auto;
+      width: max-content;
+    }
+    .canvas-cell {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    canvas { background: #fff; border: 1px solid #ccc; box-shadow: 0 2px 8px #0001; }
+    h2 { text-align: center; }
+  </style>
+</head>
+<body>
+  <h2>Planet Dance and Epicycloid Visualization</h2>
+  <div id="controls" style="display:flex; justify-content:center; align-items:center; gap:2em; margin-bottom:1.5em;">
+    <label>alpha: <input type="number" id="alphaInput" value="3" step="1"></label>
+    <label>beta: <input type="number" id="betaInput" value="2" step="1"></label>
+    <label>mult: <input type="number" id="multInput" value="34" step="1"></label>
+    <span>sam: <span id="samValue"></span></span>
+  </div>
+  <div id="canvas-toggles" style="display:flex; justify-content:center; align-items:center; gap:2em; margin-bottom:1.5em;">
+    <label><input type="checkbox" id="toggle0" checked> Planet Dance</label>
+    <label><input type="checkbox" id="toggle1" checked> Linear Loops on Torus</label>
+    <label><input type="checkbox" id="toggle2" checked> Epicycloid</label>
+    <label><input type="checkbox" id="toggle3" checked> Modular Multiplication Table</label>
+  </div>
+  <div class="canvas-grid">
+    <div class="canvas-cell">
+      <canvas id="corresp0" width="350" height="350"></canvas>
+      <div>Planet Dance</div>
+    </div>
+    <div class="canvas-cell">
+      <canvas id="corresp1" width="350" height="350"></canvas>
+      <div>Linear Loops on Torus</div>
+    </div>
+    <div class="canvas-cell">
+      <canvas id="corresp2" width="350" height="350"></canvas>
+      <div>Epicycloid</div>
+    </div>
+    <div class="canvas-cell">
+      <canvas id="corresp3" width="350" height="350"></canvas>
+      <div>Modular Multiplication Table</div>
+    </div>
+  </div>
+  <script src="planet-dance.js"></script>
+</body>
+</html>
