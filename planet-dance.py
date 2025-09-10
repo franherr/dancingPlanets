@@ -137,9 +137,9 @@ def drawChords(chords, extended, circle, graph):
     for pair in chords:
         if round(((pair[0]/(2*math.pi)) % 1), 8) != round(((pair[1]/(2*math.pi)) % 1), 8) :
             if extended :
-                graph.axline((math.cos(pair[0]), math.sin(pair[0])), (math.cos(pair[1]), math.sin(pair[1])), color='black', alpha=opacity, linewidth=0.3)
+                graph.axline((math.cos(pair[0] + 0.5*math.pi), math.sin(pair[0] +  0.5*math.pi)), (math.cos(pair[1] +  0.5*math.pi), math.sin(pair[1] +  0.5*math.pi)), color='black', alpha=opacity, linewidth=0.3)
             else :     
-                graph.plot([math.cos(pair[0]), math.cos(pair[1])], [math.sin(pair[0]), math.sin(pair[1])], color='black', alpha=opacity, linewidth=0.3)
+                graph.plot([math.cos(pair[0] +  0.5*math.pi), math.cos(pair[1] +  0.5*math.pi)], [math.sin(pair[0] +  0.5*math.pi), math.sin(pair[1] +  0.5*math.pi)], color='black', alpha=opacity, linewidth=0.3)
 
 # Draws line segments representing the line ay = bx on the square torus
 # parameters: - integers a and b
@@ -194,8 +194,8 @@ def plotEpicycloid(a, b, range, graph):
         graph.axes.spines['right'].set_visible(False)
         #graph.set_aspect('equal')
     t = np.linspace(0, range, math.ceil(range/0.1))
-    x = a*np.cos(t) + b*np.cos((a/b)*t)
-    y = a*np.sin(t) + b*np.sin((a/b)*t)
+    x = a*np.cos(t + 0.5*math.pi) + b*np.cos((a/b)*t + 0.5*math.pi)
+    y = a*np.sin(t + 0.5*math.pi) + b*np.sin((a/b)*t + 0.5*math.pi)
     graph.plot(x,y)
 
 # Draws the given continuous planet dance P(a,b) on plot `graph`
@@ -346,24 +346,23 @@ def drawMMT(m, a) :
 
 #danceAndEpicycloid(5,-3)
 
-
-#drawKnots([(1,35, YELLOW), (2,1, DARKBLUE)], [0, 207])
+#drawKnots([(5,29, YELLOW), (1,25, DARKBLUE)], [1, 96])
 
 # drawEpicycloid(3,2)
 
 
-# knotAndSampleDance(1,25,50)
-# knotAndSampleDance(1,25,48)
-# knotAndSampleDance(1,25,52)
-# knotAndSampleDance(1,25,75)
-# knotAndSampleDance(3,2,100)
-# drawCorrespondence(3,2,34)
+# knotAndSampleDance(1,115,400)
+# # knotAndSampleDance(1,26,201)
+# knotAndSampleDance(1,49,100)
+knotAndSampleDance(1,31,90)
+knotAndSampleDance(1,51,100)
+#drawCorrespondence(2,3,100)
 
-# knotAndSampleDance(1,25,100)
-# knotAndSampleDance(1,25,96)
+# knotAndSampleDance(1,25,50)
+# knotAndSampleDance(1,21,200)
 # knotAndSampleDance(1,25,104)
 
-drawMMT(512, 43)
-danceAndEpicycloid(4, 3)
-knotAndSampleDance(1, 34, 100)
-drawCorrespondence(3,2,34)
+# drawMMT(512, 43)
+# danceAndEpicycloid(4, 3)
+# knotAndSampleDance(1, 34, 100)
+# drawCorrespondence(3,2,34)
