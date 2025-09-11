@@ -184,15 +184,27 @@ function drawChords(ctx, chords, extended = false, circle = true) {
 function plotEpicycloid(ctx, a, b, range) {
   ctx.save();
   ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-  const cx = ctx.canvas.width / 2, cy = ctx.canvas.height / 2, scale = Math.min(cx, cy) * 0.16; // further reduced scale for more zoom out
-  ctx.translate(cx, cy);
+  const w = ctx.canvas.width;
+  const h = ctx.canvas.height;
+  // Center and scale
+  const cx = w / 2;
+  const cy = h / 2;
+  const scale = 0.4 * Math.min(w, h);  // adjust zoom here
   ctx.beginPath();
   let first = true;
-  for (let t = 0; t <= range; t += 0.1) {
-    const x = scale * (a * Math.cos(t) + b * Math.cos((a / b) * t));
-    const y = scale * (a * Math.sin(t) + b * Math.sin((a / b) * t));
-    if (first) { ctx.moveTo(x, y); first = false; }
-    else { ctx.lineTo(x, y); }
+  const sample = Math.min(Math.abs(a/b), Math.abs(b/a));
+  for (let t = 0; t <= range; t += 0.1*sample) {
+    const x = (1/(a+b)) * (a * Math.cos(b*t) + b * Math.cos(a* t));
+    const y = (1/(a+b)) * (a * Math.sin(b*t) + b * Math.sin(a * t));
+
+    const canvasX = cx + scale * x;
+    const canvasY = cy - scale * y; // Flip Y so positive is up
+    if (first) {
+      ctx.moveTo(canvasX, canvasY);
+      first = false;
+    } else {
+      ctx.lineTo(canvasX, canvasY);
+    }
   }
   ctx.strokeStyle = COLORS[3];
   ctx.lineWidth = 2;
