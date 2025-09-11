@@ -354,8 +354,8 @@ def drawMMT(m, a) :
 # knotAndSampleDance(1,115,400)
 # # knotAndSampleDance(1,26,201)
 # knotAndSampleDance(1,49,100)
-knotAndSampleDance(1,31,90)
-knotAndSampleDance(1,51,100)
+# knotAndSampleDance(1,31,90)
+# knotAndSampleDance(1,51,100)
 #drawCorrespondence(2,3,100)
 
 # knotAndSampleDance(1,25,50)
@@ -365,4 +365,5 @@ knotAndSampleDance(1,51,100)
 # drawMMT(512, 43)
 # danceAndEpicycloid(4, 3)
 # knotAndSampleDance(1, 34, 100)
-# drawCorrespondence(3,2,34)
+
+drawCorrespondence(3,2,34)

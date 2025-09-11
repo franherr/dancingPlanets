@@ -5,35 +5,73 @@ function updateCanvasVisibility() {
     cell.style.display = checked ? '' : 'none';
   }
 }
-// Helper: drawKnotStrands (for torus knots)
+
 function drawKnotStrands(a, b, color, ctx) {
   ctx.save();
-  ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-  const w = ctx.canvas.width, h = ctx.canvas.height;
-  ctx.strokeStyle = color;
+  //ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+
+  const w = ctx.canvas.width;
+  const h = ctx.canvas.height;
+
   ctx.lineWidth = 1.2;
   ctx.globalAlpha = 0.8;
-  // Draw the torus square
-  ctx.strokeRect(w * 0.1, h * 0.1, w * 0.8, h * 0.8);
-  // Draw strands
-  for (let k = 0; k <= Math.max(Math.abs(a), Math.abs(b)); k++) {
-    let x0, y0, x1, y1;
-    if (a >= b) {
-      x0 = w * (0.1 + 0.8 * (k / Math.abs(b)));
-      y0 = h * 0.1;
-      x1 = x0;
-      y1 = h * 0.9;
-    } else {
-      x0 = w * 0.1;
-      y0 = h * (0.1 + 0.8 * (k / Math.abs(a)));
-      x1 = w * 0.9;
-      y1 = y0;
+
+  ctx.strokeStyle = 'black';
+  // Draw the unit square
+  const px = x => w * (0.1 + 0.8 * x);
+  const py = y => h * (0.1 + 0.8 * (1 - y));  // Flip Y for canvas
+
+  ctx.strokeRect(px(0), py(1), px(1) - px(0), py(0) - py(1));
+
+  const slope = b / a;
+
+ const drawLine = (x0, y0) => {
+  const slope = b / a;
+  const points = [];
+
+  const addPoint = (x, y) => {
+    // Check if already included (avoid duplicate corner points)
+    for (const p of points) {
+      if (Math.abs(p.x - x) < 1e-10 && Math.abs(p.y - y) < 1e-10) return;
     }
+    if (x >= 0 && x <= 1 && y >= 0 && y <= 1) {
+      points.push({ x, y });
+    }
+  };
+
+  // Intersections with all 4 sides
+  addPoint(0, slope * (0 - x0) + y0);       // Left
+  addPoint(1, slope * (1 - x0) + y0);       // Right
+
+  if (slope !== 0) {
+    addPoint((0 - y0) / slope + x0, 0);     // Bottom
+    addPoint((1 - y0) / slope + x0, 1);     // Top
+  }
+
+  if (points.length >= 2) {
+    const [p1, p2] = points;
     ctx.beginPath();
-    ctx.moveTo(x0, y0);
-    ctx.lineTo(x1, y1);
+    ctx.moveTo(px(p1.x), py(p1.y));
+    ctx.lineTo(px(p2.x), py(p2.y));
     ctx.stroke();
   }
+};
+
+  ctx.strokeStyle = color;
+  // Vertical edges: x = 0 and x = 1
+  for (let k = 0; k <= Math.max(Math.abs(a), Math.abs(b)); k++) {
+    const x = k / Math.abs(b);
+    const y = k / Math.abs(a);
+    if (x <= 1) {
+      drawLine(x, 0);  // bottom edge
+      drawLine(x, 1);  // top edge
+    }
+    if (y <= 1) {
+      drawLine(0, y);  // left edge
+      drawLine(1, y);  // right edge
+    }
+  }
+
   ctx.restore();
 }
 
@@ -41,10 +79,12 @@ function drawKnotStrands(a, b, color, ctx) {
 function sampleKnot(a, b, m, color, ctx) {
   ctx.save();
   const w = ctx.canvas.width, h = ctx.canvas.height;
+  const px = x => w * (0.1 + 0.8 * x);
+  const py = y => h * (0.1 + 0.8 * (1 - y));  // Flip Y for canvas
   ctx.fillStyle = color;
   for (let k = 0; k < m; k++) {
-    const x = w * (0.1 + 0.8 * ((a * (k / m)) % 1));
-    const y = h * (0.1 + 0.8 * ((b * (k / m)) % 1));
+    const x = px((a * (k / m)) % 1);
+    const y = py((b * (k / m)) % 1);
     ctx.beginPath();
     ctx.arc(x, y, 2, 0, 2 * Math.PI);
     ctx.fill();
