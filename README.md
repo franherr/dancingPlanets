@@ -12,18 +12,18 @@ _note: the code uses an older term "modular multiplication table" instead of "mo
 Here is a list of all user-facing fucntions available in planet-dance.py.
 
 **drawPlanetDance(alpha, beta)**
-    -parameters: integers alpha and beta
-    -Draws the planet dance P(alpha, beta) on plt
+    - parameters: integers alpha and beta
+    - Draws the planet dance P(alpha, beta) on plt
 
 **drawSampledPlanetDance(alpha, beta, m)**
     -integers alpha and beta, natural number m
     -Draws the sampled planet dance S(alpha, beta, m) on plt
 
-**drawEpicycloid(alpha, beta) **
+**drawEpicycloid(alpha, beta)**
     -parameters: integers alpha and beta, natural number m
     -Draws the sampled planet dance S(alpha, beta, m) on plt
 
-**drawMMT(m, a) **
+**drawMMT(m, a)**
     -parameters: natural number m, integer a. 
     -Draws the modular multiplication table MMT(m,a)
 
