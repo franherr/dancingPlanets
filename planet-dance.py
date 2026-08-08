@@ -36,7 +36,7 @@ drawCorrespondence
     parameters: alpha, beta, mult
         all are integers. 
     Will draw a grid of four pictures. 
-    Let the sampling rate (m) = abs(alpha - beta*mult).
+    Let the sampling rate (m) = abs(alpha*mult - beta).
     Clockwise starting from upper right corner:
         - Torus knots (alpha, beta) and (mult, 1) with intersection points highlighted.
         - Epicyloid (alpha, beta)
@@ -97,7 +97,21 @@ def generateModChords(mod, mult):
 # Given values a and b, calculated the intersection of line ay = bx with the boundary of the unit square
 # parameters: integers a and b
 # returns: list of 2-tuples representing x and y coordinates of points
+# Rejects parameters that would divide by zero several frames deeper. Every
+# construction here is defined by the ratio of alpha to beta -- the knot slope
+# b/a, the epicycloid's a/b, the strand spacing 1/abs(a) -- so a zero for
+# either one has no picture to draw, and (0, 0) additionally makes math.gcd
+# return 0, which divides by zero before any of those are reached.
+# parameters: integers a and b, and the calling function's name for the message
+# raises: ValueError naming the offending values
+def requireNonZero(a, b, caller):
+    if a == 0 or b == 0:
+        raise ValueError(
+            f"{caller}: alpha and beta must both be non-zero (got {a}, {b})"
+        )
+
 def knotStrandPoints(a, b):
+    requireNonZero(a, b, 'knotStrandPoints')
     points = []
     index = 0
     while index <= max(abs(a),abs(b)) :
@@ -146,6 +160,7 @@ def drawChords(chords, extended, circle, graph):
 #             - string 'col' giving a color for the knot
 #             - graph is the axes of a plot where the picture should be drawn
 def drawKnotStrands(a, b, col, graph):
+    requireNonZero(a, b, 'drawKnotStrands')
     if graph == plt :
         graph.xlim(0,1)
         graph.ylim(0,1)
@@ -178,6 +193,7 @@ def sampleKnot(a, b, m, col, graph):
 #             - real number `range' (universal variable PERIOD defined at top)
 #             - graph is the axes of a plot where the picture should be drawn
 def plotEpicycloid(a, b, range, graph):
+    requireNonZero(a, b, 'plotEpicycloid')
     #graph.set_aspect('equal')
     graph.axis('equal')
     if graph == plt :
@@ -239,6 +255,7 @@ def modMultTable(m,a, graph) :
 #         - moon dance (alpha, beta) sampled m times
 # parameters: alpha, beta, mult, all are integers. 
 def drawCorrespondence(alpha, beta, mult):
+    requireNonZero(alpha, beta, 'drawCorrespondence')
     d = math.gcd(alpha, beta)
     a = alpha/d
     b = beta/d
@@ -284,6 +301,7 @@ def drawKnots(knots, sample=[0,0]) :
 # On the right:
 #     planet dance (alpha, beta) sampled at rate 'sample'
 def knotAndSampleDance(alpha, beta, sample) :
+    requireNonZero(alpha, beta, 'knotAndSampleDance')
     d = math.gcd(alpha, beta)
     a = alpha/d
     b = beta/d
@@ -302,6 +320,7 @@ def knotAndSampleDance(alpha, beta, sample) :
 # On the right:
 #     Epicycloid given by alpha and beta
 def danceAndEpicycloid(alpha, beta) :
+    requireNonZero(alpha, beta, 'danceAndEpicycloid')
     d = math.gcd(alpha, beta)
     a = alpha/d
     b = beta/d
@@ -366,4 +385,7 @@ def drawMMT(m, a) :
 # danceAndEpicycloid(4, 3)
 # knotAndSampleDance(1, 34, 100)
 
-drawCorrespondence(3,2,34)
+# Guarded so the module can be imported -- to reuse or test a single function --
+# without a plot window opening as a side effect of the import.
+if __name__ == "__main__":
+    drawCorrespondence(3,2,34)
